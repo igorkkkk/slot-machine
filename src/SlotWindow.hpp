@@ -28,12 +28,15 @@ public:
 	Button* GetStopButton();
 	Game* GetGame();
 	sf::Font GetFont();
-	
+
 	~SlotWindow();
 	void StartLoop();
 
-private:
 
+	sf::RenderWindow* GetWindow() { return &window_; }
+	void Draw();
+
+private:
 	SlotState* current_state_;
 
 	// Create the window of the application
@@ -45,11 +48,8 @@ private:
 
 	sf::Font font_;
 	sf::Clock timer_;
-	static constexpr std::size_t kFramerateLimit{ 60 };
-
-
+	static constexpr std::size_t kFramerateLimit{60};
 };
-
 
 
 #endif SLOT_WINDOW_HPP

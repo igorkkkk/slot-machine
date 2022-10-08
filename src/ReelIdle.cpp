@@ -12,7 +12,7 @@ ReelState& ReelIdle::getInstance()
 	static ReelIdle singleton;
 	return singleton;
 }
+
 void ReelIdle::update(Reel* reel)
 {
-	
 }

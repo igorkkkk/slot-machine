@@ -10,7 +10,6 @@ void ReelStop::toggle(Reel* reel)
 void ReelStop::update(Reel* reel)
 {
 	reel->Stop();
-	
 }
 
 ReelState& ReelStop::getInstance()
@@ -18,7 +17,7 @@ ReelState& ReelStop::getInstance()
 	static ReelStop singleton;
 	return singleton;
 }
+
 void ReelStop::enter(Reel* reel)
 {
-	
 }

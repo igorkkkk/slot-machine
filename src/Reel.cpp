@@ -56,7 +56,7 @@ void Reel::RenderTexture(std::map<ReelFigures, sf::Texture> textures)
 	reel_render_.clear(sf::Color(100, 130, 100));
 
 	// Count move
-	if ((int(std::rint(delta_spin_)) % IMAGE_SIZE) >= (IMAGE_SIZE*40.0f/48.0f) && delta_spin_)
+	if ((int(std::rint(delta_spin_)) % IMAGE_SIZE) >= (IMAGE_SIZE * 40.0f / 48.0f) && delta_spin_)
 	{
 		auto val0 = figures_vec_.at(2);
 		auto val1 = figures_vec_.at(3);
@@ -69,7 +69,7 @@ void Reel::RenderTexture(std::map<ReelFigures, sf::Texture> textures)
 		delta_spin_ = 0;
 	}
 
-	auto iter = figures_vec_.begin(); 
+	auto iter = figures_vec_.begin();
 	for (int i = 0; iter != figures_vec_.end(); iter++, i++)
 	{
 		// Create a sprite
@@ -96,7 +96,6 @@ void Reel::RenderReel(sf::RenderWindow& slot_window)
 	local.setTextureRect(tmp);
 	slot_window.draw(reel_shape_);
 	slot_window.draw(local);
-	
 }
 
 void Reel::ComputeDelta()
@@ -109,7 +108,7 @@ void Reel::ComputeDelta()
 				delta_time_.asMilliseconds() / 1000 -
 				std::pow(current_spin_time_ptr_->getElapsedTime().asMilliseconds() / 1000, 3)));
 		//delta_per_tick = (delta_per_tick % 8 == 0)  ? delta_per_tick : delta_per_tick - (delta_per_tick % 8);
-		delta_spin_ += delta_per_tick;// 8 * (delta_per_tick % (IMAGE_SIZE / 8));
+		delta_spin_ += delta_per_tick; // 8 * (delta_per_tick % (IMAGE_SIZE / 8));
 	}
 	else if (current_spin_time_ptr_->getElapsedTime() >= delta_time_)
 	{
@@ -121,7 +120,6 @@ void Reel::Stop()
 {
 	if (delta_spin_ != float(IMAGE_SIZE / 4))
 	{
-		
 		delta_spin_ += 4;
 		if (std::fmodf(delta_spin_, float(IMAGE_SIZE / 4)) < float(IMAGE_SIZE) / 16)
 		{

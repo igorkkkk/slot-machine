@@ -20,5 +20,4 @@ ReelState& ReelAccelerate::getInstance()
 
 void ReelAccelerate::enter(Reel* reel)
 {
-	
 }

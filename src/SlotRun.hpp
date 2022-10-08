@@ -15,7 +15,9 @@ public:
 	static SlotState& getInstance();
 
 private:
-	SlotRun(){};
+	SlotRun()
+	{
+	};
 	SlotRun(const SlotRun& other);
 	SlotRun& operator=(const SlotRun& other);
 };

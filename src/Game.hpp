@@ -43,7 +43,6 @@ public:
 	void PlayPlaySound(bool loop = false);
 	void StopPlaySound();
 private:
-
 	sf::RenderWindow& window_;
 
 	std::vector<Reel*> reel_storage_ptr_;

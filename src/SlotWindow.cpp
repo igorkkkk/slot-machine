@@ -6,24 +6,24 @@ SlotWindow::SlotWindow()
 		  sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),
 		  "SFML Slot Machine",
 		  sf::Style::Titlebar | sf::Style::Close
-	  }, game_ptr_{ new Game(window_)}
+	  }, game_ptr_{new Game(window_)}
 {
 	window_.setFramerateLimit(kFramerateLimit);
 	window_.setVerticalSyncEnabled(true);
+	window_.setActive(false);
 
 	if (!font_.loadFromFile(FONT_PATH))
 	{
 	}
 
-	start_ptr_ = new Button(sf::Vector2f(IMAGE_SIZE * 3 + IMAGE_SIZE/2, IMAGE_SIZE / 4),
-	                    sf::Vector2f(IMAGE_SIZE / 4, IMAGE_SIZE / 8),
-	                    font_, std::string("Start"));
-	stop_ptr_ = new Button(sf::Vector2f(IMAGE_SIZE * 3 + IMAGE_SIZE / 2, IMAGE_SIZE + IMAGE_SIZE/8),
-	                   sf::Vector2f(IMAGE_SIZE / 4, IMAGE_SIZE / 8),
-	                   font_, std::string("Stop"));
+	start_ptr_ = new Button(sf::Vector2f(IMAGE_SIZE * 3 + IMAGE_SIZE / 2, IMAGE_SIZE / 4),
+	                        sf::Vector2f(IMAGE_SIZE / 4, IMAGE_SIZE / 8),
+	                        font_, std::string("Start"));
+	stop_ptr_ = new Button(sf::Vector2f(IMAGE_SIZE * 3 + IMAGE_SIZE / 2, IMAGE_SIZE + IMAGE_SIZE / 8),
+	                       sf::Vector2f(IMAGE_SIZE / 4, IMAGE_SIZE / 8),
+	                       font_, std::string("Stop"));
 
 	current_state_ = &SlotImput::getInstance();
-
 	timer_.restart();
 }
 
@@ -46,22 +46,25 @@ void SlotWindow::StartLoop()
 					break;
 				}
 			}
-
 			current_state_->update(this);
-
-			// Draw all content
-			window_.clear(BACKGROUND_COLOR);
-
-			game_ptr_->Draw();
-			start_ptr_->Render(&window_);
-			stop_ptr_->Render(&window_);
-			game_ptr_->DrawScore(font_);
-			window_.display();
 		}
 	}
 }
 
+void SlotWindow::Draw()
+{
+	while (window_.isOpen())
+	{
+		// Draw all content
+		window_.clear(BACKGROUND_COLOR);
 
+		game_ptr_->Draw();
+		start_ptr_->Render(&window_);
+		stop_ptr_->Render(&window_);
+		game_ptr_->DrawScore(font_);
+		window_.display();
+	}
+}
 
 SlotWindow::~SlotWindow()
 {
@@ -94,6 +97,7 @@ Button* SlotWindow::GetStopButton()
 {
 	return stop_ptr_;
 }
+
 Game* SlotWindow::GetGame()
 {
 	return game_ptr_;
@@ -103,5 +107,3 @@ sf::Font SlotWindow::GetFont()
 {
 	return font_;
 }
-
-

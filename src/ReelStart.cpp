@@ -2,6 +2,7 @@
 #include "../src/ReelAccelerate.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 void ReelStart::toggle(Reel* reel)
 {
 	// Start to acceleration
@@ -19,7 +20,6 @@ ReelState& ReelStart::getInstance()
 	return singleton;
 }
 
-void ReelStart::enter(Reel* reel) 
+void ReelStart::enter(Reel* reel)
 {
-
 }

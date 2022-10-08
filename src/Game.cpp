@@ -11,7 +11,7 @@ Game::Game(sf::RenderWindow& window)
 	for (int i = 0; i < REEL_NUM; i++)
 	{
 		//FIXME: add spamt pointer
-		reel_storage_ptr_.push_back(new Reel(sf::Vector2f(IMAGE_SIZE/4+IMAGE_SIZE * i, IMAGE_SIZE / 4),
+		reel_storage_ptr_.push_back(new Reel(sf::Vector2f(IMAGE_SIZE / 4 + IMAGE_SIZE * i, IMAGE_SIZE / 4),
 		                                     sf::Vector2f(IMAGE_SIZE,IMAGE_SIZE),
 		                                     timer_ptr));
 	}
@@ -30,13 +30,19 @@ Game::Game(sf::RenderWindow& window)
 
 	// Initialize sounds
 	// Game sound
-	if (!game_sound_buffer_.loadFromFile(GAME_SOUND_PATH)) {}
+	if (!game_sound_buffer_.loadFromFile(GAME_SOUND_PATH))
+	{
+	}
 	game_sound_.setBuffer(game_sound_buffer_);
 	// Game win sound
-	if (!game_win_sound_buffer_.loadFromFile(GAME_WIN_SOUND_PATH)) {}
+	if (!game_win_sound_buffer_.loadFromFile(GAME_WIN_SOUND_PATH))
+	{
+	}
 	game_win_sound_.setBuffer(game_win_sound_buffer_);
 	// Game play sound
-	if (!game_play_sound_buffer_.loadFromFile(GAME_PLAY_SOUND_PATH)) {}
+	if (!game_play_sound_buffer_.loadFromFile(GAME_PLAY_SOUND_PATH))
+	{
+	}
 	game_play_sound_.setBuffer(game_play_sound_buffer_);
 
 	// Setup text parameters
@@ -48,14 +54,14 @@ Game::Game(sf::RenderWindow& window)
 
 	// set the text style
 	text_.setStyle(sf::Text::Bold);
-	text_.setPosition(IMAGE_SIZE * 3 + IMAGE_SIZE / 2, IMAGE_SIZE/2 + IMAGE_SIZE / 4);
+	text_.setPosition(IMAGE_SIZE * 3 + IMAGE_SIZE / 2, IMAGE_SIZE / 2 + IMAGE_SIZE / 4);
 }
 
 Game::~Game()
 {
 	for (auto* el : reel_storage_ptr_)
 	{
-		//		delete[] el;
+		delete el;
 	}
 }
 
@@ -81,7 +87,6 @@ void Game::NewGame(bool a)
 	timer_ptr->restart();
 	for (auto* el : reel_storage_ptr_)
 	{
-		
 		// Toggle to start
 		el->toggle();
 	}
@@ -128,7 +133,7 @@ bool Game::ReelStop()
 void Game::DrawScore(sf::Font font)
 {
 	// set the string to display
-	std::string result= "SCORE: ";
+	std::string result = "SCORE: ";
 	result.append(std::to_string(score_));
 	text_.setString(result);
 	// Select the font

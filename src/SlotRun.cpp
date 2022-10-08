@@ -24,18 +24,19 @@ SlotState& SlotRun::getInstance()
 	static SlotRun singleton;
 	return singleton;
 }
-void  SlotRun::update(SlotWindow* slot)
+
+void SlotRun::update(SlotWindow* slot)
 {
 	slot->GetStopButton()->Update(static_cast<sf::Vector2f>(sf::Mouse::getPosition(slot->GetGame()->GetWindow())));
 	if (slot->GetStopButton()->isPressed())
 	{
 		slot->GetGame()->EndRound();
 	}
-	if(slot->GetGame()->ReelStop())
+	if (slot->GetGame()->ReelStop())
 	{
-		slot->toggle();	
+		slot->toggle();
 	}
-		
-	
+
+
 	slot->GetGame()->Update();
 }

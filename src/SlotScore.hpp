@@ -10,12 +10,18 @@ class SlotScore :
 public:
 	void enter(SlotWindow* slot);
 	void toggle(SlotWindow* slot);
-	void exit(SlotWindow* slot) {}
+
+	void exit(SlotWindow* slot)
+	{
+	}
+
 	void update(SlotWindow* slot);
 	static SlotState& getInstance();
 
 private:
-	SlotScore(){};
+	SlotScore()
+	{
+	};
 	SlotScore(const SlotScore& other);
 	SlotScore& operator=(const SlotScore& other);
 };

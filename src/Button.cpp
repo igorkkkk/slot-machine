@@ -1,10 +1,10 @@
 #include "../src/Button.hpp"
 
-Button::Button(sf::Vector2f  position, sf::Vector2f dimentions, sf::Font font, std::string text)
+Button::Button(sf::Vector2f position, sf::Vector2f dimentions, sf::Font font, std::string text)
 {
 	this->lock_ = false;
 	this->button_state_ = ButtonStates::kButtonIdle;
-	
+
 	this->shape_.setPosition(position);
 	this->shape_.setSize(dimentions);
 
@@ -15,15 +15,18 @@ Button::Button(sf::Vector2f  position, sf::Vector2f dimentions, sf::Font font, s
 	this->text_.setCharacterSize(this->character_size_);
 
 	this->text_.setPosition(
-		this->shape_.getPosition().x  + (this->shape_.getGlobalBounds().width / 2.0f) - this->text_.getGlobalBounds().width / 2.0f,
-		this->shape_.getPosition().y  + (this->shape_.getGlobalBounds().height / 2.0f) - this->text_.getGlobalBounds().height / 2.0f
+		this->shape_.getPosition().x + (this->shape_.getGlobalBounds().width / 2.0f) - this->text_.getGlobalBounds().
+		width / 2.0f,
+		this->shape_.getPosition().y + (this->shape_.getGlobalBounds().height / 2.0f) - this->text_.getGlobalBounds().
+		height / 2.0f
 	);
 
 	this->shape_.setFillColor(this->state_colors_.find(ButtonStates::kButtonIdle)->second);
 
-	if (!button_sound_buffer_.loadFromFile(BUTTON_PRESSED_SOUND_PATH)) {}
+	if (!button_sound_buffer_.loadFromFile(BUTTON_PRESSED_SOUND_PATH))
+	{
+	}
 	button_sound_.setBuffer(button_sound_buffer_);
-	
 }
 
 Button::~Button()
@@ -36,10 +39,10 @@ void Button::Render(sf::RenderTarget* target)
 	target->draw(this->text_);
 }
 
-void Button::Update(const sf::Vector2f mousePos) 
+void Button::Update(const sf::Vector2f mousePos)
 {
 	// Update state
-	if ( this->shape_.getGlobalBounds().contains((mousePos)) && !lock_)
+	if (this->shape_.getGlobalBounds().contains((mousePos)) && !lock_)
 	{
 		this->button_state_ = ButtonStates::kButtonHover;
 
@@ -50,7 +53,8 @@ void Button::Update(const sf::Vector2f mousePos)
 			this->button_sound_.play();
 		}
 	}
-	else {
+	else
+	{
 		this->button_state_ = ButtonStates::kButtonIdle;
 	}
 
@@ -59,7 +63,7 @@ void Button::Update(const sf::Vector2f mousePos)
 
 const bool Button::isPressed()
 {
-	if(this->button_state_ == ButtonStates::kButtonPressed)
+	if (this->button_state_ == ButtonStates::kButtonPressed)
 		return true;
 
 	return false;
@@ -75,4 +79,3 @@ const bool Button::isLocked()
 {
 	return lock_;
 }
-

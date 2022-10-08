@@ -15,7 +15,9 @@ public:
 	static SlotState& getInstance();
 
 private:
-	SlotImput(){};
+	SlotImput()
+	{
+	};
 	SlotImput(const SlotImput& other);
 	SlotImput& operator=(const SlotImput& other);
 };

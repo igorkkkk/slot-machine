@@ -12,7 +12,7 @@ class ReelState;
 class Reel
 {
 public:
-	Reel(sf::Vector2f  position, sf::Vector2f dimentions, std::shared_ptr<sf::Clock>& game_clock_ptr);
+	Reel(sf::Vector2f position, sf::Vector2f dimentions, std::shared_ptr<sf::Clock>& game_clock_ptr);
 
 	Reel(const Reel& obj);
 
@@ -27,9 +27,10 @@ public:
 	void ComputeDelta();
 	void Stop();
 
-	
+
 	// Enum class for figures
-	enum class ReelFigures {
+	enum class ReelFigures
+	{
 		kBanana = 0,
 		kRaspberry,
 		kWatermelon,
@@ -43,12 +44,11 @@ public:
 
 	ReelFigures getScore();
 private:
-	
 	ReelState* current_state_;
 	// Circular Buffer to store picture name;
 	std::vector<ReelFigures> figures_vec_;
 	// Is used to move thought textures
-	std::vector<ReelFigures>::iterator  main_texture_iter_ ;
+	std::vector<ReelFigures>::iterator main_texture_iter_;
 	// Delta
 	float delta_spin_ = 0;
 	// Reel shape
@@ -58,15 +58,12 @@ private:
 
 	// Spin sound
 	sf::SoundBuffer spin_sound_buffer_;
-	sf::Sound spin_sound_ ;
+	sf::Sound spin_sound_;
 
 	float gain_ = 2.0f;
 	// Reference
 	std::shared_ptr<sf::Clock> current_spin_time_ptr_;
 	sf::Time delta_time_;
-	
-
-
 };
 
 #endif REEL_HPP
