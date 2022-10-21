@@ -49,6 +49,11 @@ void Reel::setState(ReelState& newState)
 	current_state_->enter(this); // Do stuff after we change state
 }
 
+bool Reel::GetValue()
+{
+	return (int(std::rint(delta_spin_)) % IMAGE_SIZE) >= (IMAGE_SIZE * 40.0f / 48.0f) && delta_spin_;
+}
+
 void Reel::RenderTexture(std::map<ReelFigures, sf::Texture> textures)
 {
 	//draw texture of imgs
@@ -56,7 +61,7 @@ void Reel::RenderTexture(std::map<ReelFigures, sf::Texture> textures)
 	reel_render_.clear(sf::Color(100, 130, 100));
 
 	// Count move
-	if ((int(std::rint(delta_spin_)) % IMAGE_SIZE) >= (IMAGE_SIZE * 40.0f / 48.0f) && delta_spin_)
+	if (GetValue())
 	{
 		auto val0 = figures_vec_.at(2);
 		auto val1 = figures_vec_.at(3);
@@ -83,7 +88,6 @@ void Reel::RenderTexture(std::map<ReelFigures, sf::Texture> textures)
 	}
 
 	reel_render_.display();
-	//TODO cut texture or draw part with no offset
 }
 
 void Reel::RenderReel(sf::RenderWindow& slot_window)
@@ -98,17 +102,21 @@ void Reel::RenderReel(sf::RenderWindow& slot_window)
 	slot_window.draw(local);
 }
 
+double Reel::DeltaInTick()
+{
+	return std::rint(
+		float(gain_ / 2) * (std::pow(current_spin_time_ptr_->getElapsedTime().asMilliseconds() / 1000, 2) *
+			delta_time_.asMilliseconds() / 1000 -
+			std::pow(current_spin_time_ptr_->getElapsedTime().asMilliseconds() / 1000, 3)));
+}
+
 void Reel::ComputeDelta()
 {
 	if (current_spin_time_ptr_->getElapsedTime() < delta_time_ &&
 		(current_spin_time_ptr_->getElapsedTime().asMilliseconds() % 4 == 0))
 	{
-		int delta_per_tick = std::rint(
-			float(gain_ / 2) * (std::pow(current_spin_time_ptr_->getElapsedTime().asMilliseconds() / 1000, 2) *
-				delta_time_.asMilliseconds() / 1000 -
-				std::pow(current_spin_time_ptr_->getElapsedTime().asMilliseconds() / 1000, 3)));
-		//delta_per_tick = (delta_per_tick % 8 == 0)  ? delta_per_tick : delta_per_tick - (delta_per_tick % 8);
-		delta_spin_ += delta_per_tick; // 8 * (delta_per_tick % (IMAGE_SIZE / 8));
+		int delta_per_tick = DeltaInTick();
+		delta_spin_ += delta_per_tick;
 	}
 	else if (current_spin_time_ptr_->getElapsedTime() >= delta_time_)
 	{
@@ -118,17 +126,14 @@ void Reel::ComputeDelta()
 
 void Reel::Stop()
 {
-	if (delta_spin_ != float(IMAGE_SIZE / 4))
-	{
-		delta_spin_ += 4;
-		if (std::fmodf(delta_spin_, float(IMAGE_SIZE / 4)) < float(IMAGE_SIZE) / 16)
-		{
-			delta_spin_ = IMAGE_SIZE / 4;
-		}
-	}
-	else
+	if (delta_spin_ = float(IMAGE_SIZE / 4))
 	{
 		toggle();
+	}
+	delta_spin_ += 4;
+	if (std::fmodf(delta_spin_, float(IMAGE_SIZE / 4)) < float(IMAGE_SIZE) / 16)
+	{
+		delta_spin_ = IMAGE_SIZE / 4;
 	}
 }
 

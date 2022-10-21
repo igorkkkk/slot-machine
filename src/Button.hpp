@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <stdlib.h>
-//#include "Point.hpp"
 #include <map>
 #include <string>
 

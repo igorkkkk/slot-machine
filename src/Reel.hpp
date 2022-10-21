@@ -23,6 +23,7 @@ public:
 	void Update();
 	// This will get called by the current state
 	void setState(ReelState& newState);
+	bool GetValue();
 	// Computation of delta
 	void ComputeDelta();
 	void Stop();
@@ -41,6 +42,7 @@ public:
 	void RenderTexture(std::map<ReelFigures, sf::Texture> textures);
 	// Draw the window with reel
 	void RenderReel(sf::RenderWindow& slot_window);
+	double DeltaInTick();
 
 	ReelFigures getScore();
 private:
